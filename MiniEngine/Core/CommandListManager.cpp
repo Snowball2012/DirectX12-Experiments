@@ -97,7 +97,10 @@ void CommandListManager::Create(ID3D12Device* pDevice)
 
 #ifndef RELEASE
 	// Prevent the GPU from overclocking or underclocking to get consistent timings
-	pDevice->SetStablePowerState(TRUE);
+#ifndef GPU_SET_STABLE_POWER_STATE_NOT_SUPPORTED
+	// does not work on some GPUs/drivers
+	 pDevice->SetStablePowerState(TRUE);
+#endif
 #endif
 
 	m_GraphicsQueue.Create(pDevice);
